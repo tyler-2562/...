@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Please</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      width: 250px;
+      text-align: center;
+      border: 2px solid #333;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 25px;
+      font-size: 18px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Password Please</h1>
+  <input type="text" id="password" placeholder="Enter password (e.g., 9263837)" />
+  <button onclick="checkPassword()">Enter</button>
+  <div class="error" id="error"></div>
+
+  <script>
+    function checkPassword() {
+      const input = document.getElementById('password').value;
+      if (input === '911/711') {
+        const win = window.open('about:blank', '_blank');
+        win.document.write(`
+          <iframe src="https://blooket-eta.vercel.app" style="border:none;width:100vw;height:100vh;"></iframe>
+        `);
+        win.document.close();
+      } else {
+        document.getElementById('error').textContent = "Incorrect password!";
+      }
+    }
+  </script>
+</body>
+</html>
