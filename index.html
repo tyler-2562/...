@@ -1,111 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Code Please</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      font-family: sans-serif;
+      background: #f1f1f1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px;
+      padding: 50px;
     }
-
     h1 {
-      color: #ff9900;
+      margin-bottom: 20px;
     }
-
-    #passwordForm {
-      margin: 20px 0;
-    }
-
-    input[type="text"], input[type="email"] {
+    input[type="text"] {
       padding: 10px;
       font-size: 16px;
       width: 250px;
       margin-bottom: 10px;
     }
-
     button {
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #ff9900;
-      border: none;
-      color: white;
+      margin: 5px;
       cursor: pointer;
     }
-
-    #popup {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      background: white;
-      padding: 20px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      position: absolute;
-      top: 20%;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    #overlay {
+    .popup {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.3);
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -30%);
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      z-index: 100;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 99;
     }
   </style>
 </head>
 <body>
+  <h1>Code Please</h1>
+  <input type="text" id="codeInput" placeholder="Enter Code">
+  <br>
+  <button onclick="handleCode()">Go To Code</button>
+  <button onclick="openForm()">Create Code</button>
 
-  <h1>Scratch Interface</h1>
+  <div class="overlay" id="overlay"></div>
 
-  <form id="passwordForm">
-    <input type="text" id="passwordInput" placeholder="Code Please" required />
-    <button type="submit">Go To Code</button>
-  </form>
-
-  <button onclick="openPopup()">Create Code</button>
-
-  <div id="overlay" onclick="closePopup()"></div>
-  <div id="popup">
+  <div class="popup" id="popup">
     <form action="https://formspree.io/f/mnndezgq" method="POST">
-      <input type="text" name="code" placeholder="Suggest a code" required>
-      <input type="email" name="email" placeholder="Your email (optional)">
+      <h3>Request a New Code</h3>
+      <label>Code:</label><br>
+      <input type="text" name="code" required><br><br>
+      <label>URL:</label><br>
+      <input type="url" name="url" required><br><br>
       <button type="submit">Submit</button>
+      <button type="button" onclick="closeForm()">Cancel</button>
     </form>
   </div>
 
   <script>
-    const redirects = {
-      "911/711": "https://blooket-eta.vercel.app",
-      "1v1.lol": "https://blooket-eta.vercel.app/uv/service/hvtrs8%2F-sktgs%2Cgmoelg.aoo%2Fqive-ulbnoakgdutd%2F3v3-non"
-    };
-
-    document.getElementById("passwordForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const code = document.getElementById("passwordInput").value.trim();
-      const link = redirects[code];
-      if (link) {
-        const newWindow = window.open("about:blank", "_blank");
-        newWindow.location.href = link;
+    function handleCode() {
+      const code = document.getElementById("codeInput").value.trim();
+      if (code === "911/711") {
+        window.open("https://blooket-eta.vercel.app", "_blank");
+      } else if (code === "1v1.lol") {
+        window.open("https://blooket-eta.vercel.app/uv/service/hvtrs8%2F-sktgs%2Cgmoelg.aoo%2Fqive-ulbnoakgdutd%2F3v3-non", "_blank");
       } else {
-        alert("Code not found!");
+        alert("Unknown code. Please try again or create a new one.");
       }
-    });
+    }
 
-    function openPopup() {
-      document.getElementById("popup").style.display = "flex";
+    function openForm() {
+      document.getElementById("popup").style.display = "block";
       document.getElementById("overlay").style.display = "block";
     }
 
-    function closePopup() {
+    function closeForm() {
       document.getElementById("popup").style.display = "none";
       document.getElementById("overlay").style.display = "none";
     }
   </script>
-
 </body>
 </html>
