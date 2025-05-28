@@ -1,96 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Code Please</title>
+  <meta charset="UTF-8">
+  <title>Code Portal</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f1f1f1;
+      background-color: #f0faff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 50px;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
     }
     h1 {
+      color: #6EC1E4;
       margin-bottom: 20px;
     }
-    input[type="text"] {
+    .container {
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    input[type="text"], input[type="password"] {
       padding: 10px;
-      font-size: 16px;
       width: 250px;
+      font-size: 16px;
+      border: 2px solid #6EC1E4;
+      border-radius: 8px;
+      outline: none;
       margin-bottom: 10px;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
+    .button {
+      background-color: #6EC1E4;
+      color: white;
+      border: none;
+      padding: 10px 16px;
       margin: 5px;
+      border-radius: 8px;
+      font-weight: bold;
       cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s ease;
     }
-    .popup {
+    .button:hover {
+      background-color: #58afd4;
+    }
+    .hidden {
       display: none;
+    }
+    .form-popup {
       position: fixed;
-      top: 30%;
+      top: 50%;
       left: 50%;
-      transform: translate(-50%, -30%);
+      transform: translate(-50%, -50%);
       background: white;
-      border: 1px solid #ccc;
+      border: 2px solid #6EC1E4;
+      border-radius: 12px;
       padding: 20px;
-      z-index: 100;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 999;
     }
     .overlay {
-      display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
-      z-index: 99;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.3);
+      width: 100%;
+      height: 100%;
+      z-index: 998;
     }
   </style>
 </head>
 <body>
-  <h1>Code Please</h1>
-  <input type="text" id="codeInput" placeholder="Enter Code">
-  <br>
-  <button onclick="handleCode()">Go To Code</button>
-  <button onclick="openForm()">Create Code</button>
-
-  <div class="overlay" id="overlay"></div>
-
-  <div class="popup" id="popup">
-    <form action="https://formspree.io/f/mnndezgq" method="POST">
-      <h3>Request a New Code</h3>
-      <label>Code:</label><br>
-      <input type="text" name="code" required><br><br>
-      <label>URL:</label><br>
-      <input type="url" name="url" required><br><br>
-      <button type="submit">Submit</button>
-      <button type="button" onclick="closeForm()">Cancel</button>
-    </form>
+  <div class="container">
+    <h1>Code Portal</h1>
+    <input type="password" id="codeInput" placeholder="Code please">
+    <br>
+    <button class="button" onclick="goToCode()">Go To Code</button>
+    <button class="button" onclick="showForm()">Create Code</button>
+    <button class="button" onclick="toggleVisibility()">Show Password</button>
   </div>
 
+  <div id="formContainer" class="form-popup hidden">
+    <h2>Request New Code</h2>
+    <form action="https://formspree.io/f/mnndezgq" method="POST">
+      <input type="text" name="code" placeholder="Code" required><br><br>
+      <input type="text" name="link" placeholder="Link" required><br><br>
+      <input class="button" type="submit" value="Submit">
+      <button class="button" type="button" onclick="hideForm()">Cancel</button>
+    </form>
+  </div>
+  <div id="overlay" class="overlay hidden" onclick="hideForm()"></div>
+
   <script>
-    function handleCode() {
-      const code = document.getElementById("codeInput").value.trim();
-      if (code === "911/711") {
+    function goToCode() {
+      const input = document.getElementById("codeInput").value.trim();
+
+      if (input === "911/711") {
         window.open("https://blooket-eta.vercel.app", "_blank");
-      } else if (code === "1v1.lol") {
+      } else if (input === "1v1.lol") {
         window.open("https://blooket-eta.vercel.app/uv/service/hvtrs8%2F-sktgs%2Cgmoelg.aoo%2Fqive-ulbnoakgdutd%2F3v3-non", "_blank");
       } else {
-        alert("Unknown code. Please try again or create a new one.");
+        alert("Invalid code.");
       }
     }
 
-    function openForm() {
-      document.getElementById("popup").style.display = "block";
-      document.getElementById("overlay").style.display = "block";
+    function showForm() {
+      document.getElementById("formContainer").classList.remove("hidden");
+      document.getElementById("overlay").classList.remove("hidden");
     }
 
-    function closeForm() {
-      document.getElementById("popup").style.display = "none";
-      document.getElementById("overlay").style.display = "none";
+    function hideForm() {
+      document.getElementById("formContainer").classList.add("hidden");
+      document.getElementById("overlay").classList.add("hidden");
+    }
+
+    function toggleVisibility() {
+      const input = document.getElementById("codeInput");
+      input.type = input.type === "password" ? "text" : "password";
     }
   </script>
 </body>
