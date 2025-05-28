@@ -2,69 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Password Please</title>
+  <title>Scratch Portal</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f2f5;
+      background: #f4f4f4;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
+      padding: 40px;
     }
+
     h1 {
-      font-size: 2.5em;
-      color: #1a1a1a;
-      margin-bottom: 20px;
+      color: #ff9900;
     }
-    input {
+
+    #passwordForm {
+      margin: 20px 0;
+    }
+
+    input[type="text"], input[type="email"] {
       padding: 10px;
-      font-size: 18px;
+      font-size: 16px;
       width: 250px;
-      text-align: center;
-      border: 2px solid #333;
-      border-radius: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
+
     button {
-      padding: 10px 25px;
-      font-size: 18px;
-      background-color: #007bff;
-      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff9900;
       border: none;
-      border-radius: 10px;
+      color: white;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #0056b3;
+
+    #popup {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      background: white;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      position: absolute;
+      top: 20%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .error {
-      color: red;
-      margin-top: 10px;
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
     }
   </style>
 </head>
 <body>
-  <h1>Password Please</h1>
-  <input type="text" id="password" placeholder="Enter password (e.g., 9263837)" />
-  <button onclick="checkPassword()">Enter</button>
-  <div class="error" id="error"></div>
+
+  <h1>Code Please</h1>
+
+  <form id="passwordForm">
+    <input type="text" id="passwordInput" placeholder="Enter code..." required />
+    <button type="submit">Go To Code</button>
+  </form>
+
+  <button onclick="openPopup()">Create Code</button>
+
+  <div id="overlay" onclick="closePopup()"></div>
+  <div id="popup">
+    <form action="https://formspree.io/f/mnndezgq" method="POST">
+      <input type="text" name="code" placeholder="Suggest a code" required>
+      <input type="email" name="email" placeholder="Your email (optional)">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 
   <script>
-    function checkPassword() {
-      const input = document.getElementById('password').value;
-      if (input === '911/711') {
-        const win = window.open('about:blank', '_blank');
-        win.document.write(`
-          <iframe src="https://blooket-eta.vercel.app" style="border:none;width:100vw;height:100vh;"></iframe>
-        `);
-        win.document.close();
+    const redirects = {
+      "911/711": "https://blooket-eta.vercel.app/uv/service/hvtrs8%2F-sktgs%2Cgmoelg.aoo%2Fqive-ulbnoakgdutd%2F3v3-non",
+      "1v1.lol": "https://blooket-eta.vercel.app/uv/service/hvtrs8%2F-sktgs%2Cgmoelg.aoo%2Fqive-ulbnoakgdutd%2F3v3-non"
+    };
+
+    document.getElementById("passwordForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const code = document.getElementById("passwordInput").value.trim();
+      const link = redirects[code];
+      if (link) {
+        const newWindow = window.open("about:blank", "_blank");
+        newWindow.location.href = link;
       } else {
-        document.getElementById('error').textContent = "Incorrect password!";
+        alert("Code not found!");
       }
+    });
+
+    function openPopup() {
+      document.getElementById("popup").style.display = "flex";
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
     }
   </script>
+
 </body>
 </html>
